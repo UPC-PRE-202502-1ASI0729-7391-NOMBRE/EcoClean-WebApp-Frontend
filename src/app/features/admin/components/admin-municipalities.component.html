@@ -1,0 +1,135 @@
+<section class="admin-panel">
+  <header class="admin-panel__header">
+    <div>
+      <p class="admin-panel__meta">{{ 'admin.municipalities.meta' | translate }}</p>
+      <h1>{{ 'admin.municipalities.title' | translate }}</h1>
+      <p class="subtitle">
+        {{ 'admin.municipalities.description' | translate }}
+      </p>
+    </div>
+    <button type="button" (click)="reload()">{{ 'admin.municipalities.refresh' | translate }}</button>
+  </header>
+
+  <form class="add-form card" [formGroup]="addForm" (ngSubmit)="submit()">
+    <label>
+      {{ 'admin.municipalities.form.name' | translate }}
+      <input formControlName="name" placeholder="{{ 'admin.municipalities.form.name' | translate }}" />
+    </label>
+    <label>
+      {{ 'admin.municipalities.form.department' | translate }}
+      <input formControlName="department" placeholder="{{ 'admin.municipalities.form.placeholder.department' | translate }}" />
+    </label>
+    <label>
+      {{ 'admin.municipalities.form.province' | translate }}
+      <input formControlName="province" placeholder="{{ 'admin.municipalities.form.placeholder.province' | translate }}" />
+    </label>
+    <label>
+      {{ 'admin.municipalities.form.district' | translate }}
+      <input formControlName="district" placeholder="{{ 'admin.municipalities.form.placeholder.district' | translate }}" />
+    </label>
+    <label class="full-width">
+      {{ 'admin.municipalities.form.description' | translate }}
+      <textarea formControlName="description" rows="2" placeholder="{{ 'admin.municipalities.form.placeholder.description' | translate }}"></textarea>
+    </label>
+    <div class="form-actions">
+      <button type="submit" [disabled]="addForm.invalid || saving()">
+        {{ 'admin.municipalities.form.submit' | translate }}
+      </button>
+    </div>
+  </form>
+
+  <section class="filters card">
+    <form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
+      <div class="filters__row">
+        <label>
+          {{ 'admin.municipalities.form.department' | translate }}
+          <input formControlName="department" placeholder="{{ 'admin.municipalities.form.placeholder.department' | translate }}" />
+        </label>
+        <label>
+          {{ 'admin.municipalities.form.province' | translate }}
+          <input formControlName="province" placeholder="{{ 'admin.municipalities.form.placeholder.province' | translate }}" />
+        </label>
+        <label>
+          {{ 'admin.municipalities.filters.status' | translate }}
+          <select formControlName="status">
+            <option value="all">{{ 'admin.municipalities.filters.all' | translate }}</option>
+            <option value="active">{{ 'admin.municipalities.filters.active' | translate }}</option>
+            <option value="inactive">{{ 'admin.municipalities.filters.inactive' | translate }}</option>
+          </select>
+        </label>
+        <div class="filters__actions">
+          <button type="submit">{{ 'admin.municipalities.filters.apply' | translate }}</button>
+          <button type="button" class="ghost" (click)="resetFilters()">{{ 'admin.municipalities.filters.reset' | translate }}</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <p class="error" *ngIf="error()">{{ error() }}</p>
+
+  <article class="card" *ngIf="!loading(); else loaderTpl">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'admin.municipalities.table.municipality' | translate }}</th>
+          <th>{{ 'admin.municipalities.table.department' | translate }}</th>
+          <th>{{ 'admin.municipalities.table.province' | translate }}</th>
+          <th>{{ 'admin.municipalities.table.district' | translate }}</th>
+          <th>{{ 'admin.municipalities.table.status' | translate }}</th>
+          <th>{{ 'admin.municipalities.table.description' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let municipality of municipalities()">
+          <td data-label="Municipio">{{ municipality.name }}</td>
+          <td data-label="Departamento">{{ municipality.department }}</td>
+          <td data-label="Provincia">{{ municipality.province }}</td>
+          <td data-label="Distrito">{{ municipality.district }}</td>
+          <td data-label="Estado">
+            <span class="status" [class.active]="municipality.active" [class.inactive]="!municipality.active">
+              {{ municipality.active ? ('admin.municipalities.table.status.active' | translate) : ('admin.municipalities.table.status.inactive' | translate) }}
+            </span>
+          </td>
+          <td data-label="Descripción" class="description-cell">
+            <ng-container *ngIf="municipality.description; else noDescription">
+              <span class="description-preview">{{ municipality.description }}</span>
+              <button type="button" class="link" (click)="showDescription(municipality)">
+                {{ 'admin.municipalities.description.more' | translate }}
+              </button>
+            </ng-container>
+            <ng-template #noDescription>—</ng-template>
+          </td>
+        </tr>
+        <tr *ngIf="!municipalities().length">
+        <td colspan="6" class="empty-row">{{ 'admin.municipalities.table.empty' | translate }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination" *ngIf="totalPages() > 1">
+      <button type="button" class="ghost" (click)="changePage(-1)" [disabled]="page() === 0">
+        {{ 'admin.municipalities.pagination.previous' | translate }}
+      </button>
+      <span>
+        {{ 'admin.municipalities.pagination.label' | translate : { page: page() + 1, total: totalPages(), results: totalElements() } }}
+      </span>
+      <button type="button" class="ghost" (click)="changePage(1)" [disabled]="page() + 1 >= totalPages()">
+        {{ 'admin.municipalities.pagination.next' | translate }}
+      </button>
+    </div>
+  </article>
+
+  <div class="modal-backdrop" *ngIf="selectedMunicipality()" (click)="closeDescription()"></div>
+  <div class="modal-card" *ngIf="selectedMunicipality() as modal">
+    <button class="modal-close" type="button" (click)="closeDescription()">×</button>
+    <h3>{{ modal.name }}</h3>
+    <p class="modal-meta">{{ modal.department }} · {{ modal.province }} · {{ modal.district }}</p>
+    <p class="modal-description">{{ modal.description }}</p>
+    <div class="modal-status" [class.active]="modal.active" [class.inactive]="!modal.active">
+      {{ modal.active ? 'Activo' : 'Inactivo' }}
+    </div>
+  </div>
+</section>
+
+<ng-template #loaderTpl>
+  <div class="loader" aria-busy="true"></div>
+</ng-template>

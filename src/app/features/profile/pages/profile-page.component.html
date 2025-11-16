@@ -1,0 +1,116 @@
+<section class="profile-page">
+  <header class="profile-header">
+    <div class="profile-header__copy">
+      <p class="eyebrow">EcoSmart</p>
+      <h1>{{ 'profile.title' | translate }}</h1>
+      <p class="profile-subtitle">{{ 'profile.subtitle' | translate }}</p>
+    </div>
+    <button class="ghost" type="button" (click)="loadProfile()" [disabled]="loading()">
+      {{ 'iam.dashboard.refresh' | translate }}
+    </button>
+  </header>
+
+  <p class="error" *ngIf="errorKey() as error">{{ error | translate }}</p>
+  <p class="success" *ngIf="successKey() as success">{{ success | translate }}</p>
+
+  <div class="profile-grid" *ngIf="profile() as profileData; else loader">
+    <article class="card user-card">
+      <header>
+        <h2>{{ 'profile.userCard' | translate }}</h2>
+        <p class="timestamp" *ngIf="profileData.updatedAt">
+          {{ 'profile.metadata.updated' | translate }}:
+          {{ profileData.updatedAt | date: 'medium' }}
+        </p>
+      </header>
+      <div class="user-info">
+        <div class="avatar" *ngIf="profileData.avatarUrl; else initials">
+          <img [src]="profileData.avatarUrl!" alt="Avatar" />
+        </div>
+        <ng-template #initials>
+          <div class="avatar initials">
+            {{ profileData.user.firstName.charAt(0) }}{{ profileData.user.paternalLastName.charAt(0) }}
+          </div>
+        </ng-template>
+        <div class="details">
+          <p class="name">
+            {{ profileData.user.firstName }} {{ profileData.user.paternalLastName }}
+            {{ profileData.user.maternalLastName }}
+          </p>
+          <p class="email">{{ profileData.user.email }}</p>
+          <p class="dni">DNI: {{ profileData.user.dni }}</p>
+        </div>
+      </div>
+      <dl class="metadata">
+        <div>
+          <dt>{{ 'profile.fields.bio' | translate }}</dt>
+          <dd>{{ profileData.bio || '--' }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'profile.fields.occupation' | translate }}</dt>
+          <dd>{{ profileData.occupation || '--' }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'profile.fields.addressReference' | translate }}</dt>
+          <dd>{{ profileData.addressReference || '--' }}</dd>
+        </div>
+      </dl>
+
+      <section class="contact-block">
+        <h3>{{ 'profile.contactCard' | translate }}</h3>
+        <p class="contact-row">
+          <span>{{ profileData.emergencyContact || '--' }}</span>
+          <span>{{ profileData.emergencyPhone || '--' }}</span>
+        </p>
+      </section>
+    </article>
+
+    <article class="card form-card">
+      <header>
+        <div>
+          <h2>{{ 'profile.form.title' | translate }}</h2>
+          <p>{{ 'profile.form.description' | translate }}</p>
+        </div>
+      </header>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <label>
+          {{ 'profile.fields.avatarUrl' | translate }}
+          <input type="url" placeholder="https://" formControlName="avatarUrl" />
+        </label>
+        <label>
+          {{ 'profile.fields.bio' | translate }}
+          <textarea rows="3" formControlName="bio"></textarea>
+        </label>
+        <label>
+          {{ 'profile.fields.occupation' | translate }}
+          <input type="text" formControlName="occupation" />
+        </label>
+        <label>
+          {{ 'profile.fields.addressReference' | translate }}
+          <input type="text" formControlName="addressReference" />
+        </label>
+        <label>
+          {{ 'profile.fields.emergencyContact' | translate }}
+          <input type="text" formControlName="emergencyContact" />
+        </label>
+        <label>
+          {{ 'profile.fields.emergencyPhone' | translate }}
+          <input type="text" formControlName="emergencyPhone" placeholder="999999999" />
+        </label>
+
+        <div class="form-actions">
+          <button type="button" class="ghost" (click)="resetForm()" [disabled]="loading() || saving()">
+            {{ 'profile.actions.reset' | translate }}
+          </button>
+          <button type="submit" [disabled]="loading() || saving()">
+            {{ 'profile.actions.save' | translate }}
+          </button>
+        </div>
+      </form>
+    </article>
+  </div>
+
+  <ng-template #loader>
+    <div class="loader" aria-busy="true"></div>
+  </ng-template>
+</section>

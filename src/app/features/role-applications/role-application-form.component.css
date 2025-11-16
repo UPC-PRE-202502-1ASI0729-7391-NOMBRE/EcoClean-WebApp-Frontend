@@ -1,0 +1,114 @@
+:host {
+  display: block;
+}
+
+.application-panel {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.meta {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.72rem;
+  color: rgba(6, 71, 44, 0.7);
+}
+
+.subtitle {
+  margin: 0;
+  color: #4b5b53;
+}
+
+.card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+  box-shadow: 0 20px 45px rgba(4, 42, 34, 0.08);
+  border: 1px solid rgba(6, 71, 44, 0.08);
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #0a3a2c;
+  gap: 0.4rem;
+}
+
+input,
+select,
+textarea {
+  border-radius: 0.9rem;
+  border: 1px solid rgba(6, 71, 44, 0.2);
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+}
+
+.section {
+  padding: 1.25rem;
+  border-radius: 1.1rem;
+  background: rgba(46, 125, 50, 0.05);
+  border: 1px solid rgba(46, 125, 50, 0.15);
+}
+
+.section-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(6, 71, 44, 0.8);
+}
+
+button {
+  border-radius: 999px;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  background: var(--eco-green);
+  color: #fff;
+  font-weight: 600;
+  justify-self: flex-end;
+}
+
+.success {
+  margin: 0;
+  color: var(--eco-green);
+  font-weight: 600;
+}
+
+.error {
+  margin: 0;
+  color: #c62828;
+  font-weight: 600;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--eco-green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 2rem auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

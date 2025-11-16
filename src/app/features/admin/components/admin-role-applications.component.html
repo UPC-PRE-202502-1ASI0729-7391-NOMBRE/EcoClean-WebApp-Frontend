@@ -1,0 +1,87 @@
+<section class="admin-panel">
+  <header class="admin-panel__header">
+    <div>
+      <p class="admin-panel__meta">{{ 'admin.roleApplications.meta' | translate }}</p>
+      <h1>{{ 'admin.roleApplications.title' | translate }}</h1>
+      <p class="subtitle">{{ 'admin.roleApplications.description' | translate }}</p>
+    </div>
+    <div class="status-filter">
+      <label>
+        {{ 'admin.roleApplications.filters.status' | translate }}
+        <select [value]="statusFilter()" (change)="onFilterChange($event)">
+          <option *ngFor="let status of statuses" [value]="status">
+            {{ ('admin.roleApplications.status.' + status) | translate }}
+          </option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <p class="error" *ngIf="error() as errorKey">{{ errorKey | translate }}</p>
+
+  <article class="card" *ngIf="!loading(); else loaderTpl">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'admin.roleApplications.table.role' | translate }}</th>
+          <th>{{ 'admin.roleApplications.table.details' | translate }}</th>
+          <th>{{ 'admin.roleApplications.table.status' | translate }}</th>
+          <th>{{ 'admin.roleApplications.table.actions' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let application of applications()">
+          <td [attr.data-label]="'admin.roleApplications.table.role' | translate">
+            <span class="badge">{{ ('sidebar.role.' + application.role) | translate }}</span>
+            <small class="id">ID: {{ application.userId }}</small>
+          </td>
+          <td [attr.data-label]="'admin.roleApplications.table.details' | translate">
+            <div class="detail">{{ 'admin.roleApplications.fields.phone' | translate }}: {{ application.phoneNumber || '—' }}</div>
+            <div class="detail">{{ 'admin.roleApplications.fields.company' | translate }}: {{ application.company || '—' }}</div>
+            <div class="detail">{{ 'admin.roleApplications.fields.municipality' | translate }}: {{ application.municipalEntity || '—' }}</div>
+            <div class="detail">{{ 'admin.roleApplications.fields.created' | translate }}: {{ application.createdAt | date: 'medium' }}</div>
+          </td>
+          <td [attr.data-label]="'admin.roleApplications.table.status' | translate">
+            <span class="status" [class]="application.status.toLowerCase()">
+              {{ ('admin.roleApplications.status.' + application.status) | translate }}
+            </span>
+          </td>
+          <td [attr.data-label]="'admin.roleApplications.table.actions' | translate">
+            <div class="actions" *ngIf="application.status === 'PENDING'; else decided">
+              <button type="button" class="ghost" [disabled]="!!decidingId()" (click)="approve(application)">
+                {{ 'admin.roleApplications.actions.approve' | translate }}
+              </button>
+              <button type="button" class="danger" [disabled]="!!decidingId()" (click)="openRejectModal(application)">
+                {{ 'admin.roleApplications.actions.reject' | translate }}
+              </button>
+            </div>
+            <ng-template #decided>
+              <span class="decision-date">{{ application.decidedAt | date: 'medium' }}</span>
+            </ng-template>
+          </td>
+        </tr>
+        <tr *ngIf="!applications().length">
+          <td colspan="4" class="empty-row">{{ 'admin.roleApplications.table.empty' | translate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+  <div class="modal-backdrop" *ngIf="selectedApplication()" (click)="closeRejectModal()"></div>
+  <div class="modal-card" *ngIf="selectedApplication() as modal">
+    <button class="modal-close" type="button" (click)="closeRejectModal()">×</button>
+    <h3>{{ ('sidebar.role.' + modal.role) | translate }}</h3>
+    <p class="modal-description">{{ 'admin.roleApplications.modal.title' | translate }}</p>
+    <label>
+      {{ 'admin.roleApplications.modal.reason' | translate }}
+      <textarea [formControl]="rejectionReason" rows="3" placeholder="{{ 'admin.roleApplications.modal.placeholder' | translate }}"></textarea>
+    </label>
+    <button type="button" class="danger" (click)="reject()" [disabled]="rejectionReason.invalid || !!decidingId()">
+      {{ 'admin.roleApplications.actions.reject' | translate }}
+    </button>
+  </div>
+</section>
+
+<ng-template #loaderTpl>
+  <div class="loader" aria-busy="true"></div>
+</ng-template>

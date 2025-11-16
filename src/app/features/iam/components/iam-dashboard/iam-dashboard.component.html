@@ -1,0 +1,63 @@
+<section class="dashboard">
+  <header class="dashboard__header">
+    <div>
+      <p class="eyebrow">{{ 'iam.dashboard.eyebrow' | translate }}</p>
+      <h1>{{ 'iam.dashboard.title' | translate }}</h1>
+      <p>{{ 'iam.dashboard.description' | translate }}</p>
+    </div>
+    <div class="dashboard__actions">
+      <app-language-switcher></app-language-switcher>
+      <button class="ghost" (click)="refreshProfile()" [disabled]="refreshing()">
+        {{ 'iam.dashboard.refresh' | translate }}
+      </button>
+      <button class="danger" (click)="signOut()">{{ 'iam.dashboard.signOut' | translate }}</button>
+    </div>
+  </header>
+
+  <p class="error" *ngIf="refreshError() as error">{{ error | translate }}</p>
+
+  <div class="cards-grid">
+    <article class="card" *ngIf="auth.user() as user">
+      <h2>{{ 'iam.dashboard.userCardTitle' | translate }}</h2>
+      <p class="user-name">{{ fullName() }}</p>
+      <dl>
+        <div>
+          <dt>{{ 'iam.dashboard.email' | translate }}</dt>
+          <dd>{{ user.email }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'iam.dashboard.dni' | translate }}</dt>
+          <dd>{{ user.dni }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'iam.dashboard.phone' | translate }}</dt>
+          <dd>{{ user.phoneNumber }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'iam.dashboard.location' | translate }}</dt>
+          <dd>{{ user.department }} / {{ user.province }} / {{ user.district }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'iam.dashboard.roles' | translate }}</dt>
+          <dd class="roles">
+            <span *ngFor="let role of user.roles">{{ role }}</span>
+          </dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="card card--token">
+      <h2>{{ 'iam.dashboard.tokenCardTitle' | translate }}</h2>
+      <textarea readonly>{{ auth.token() }}</textarea>
+      <div class="token-actions">
+        <button class="ghost" (click)="copyToken()">
+          {{ 'iam.dashboard.copyToken' | translate }}
+        </button>
+        <p class="copy-feedback" *ngIf="copyFeedback() as feedback">{{ feedback | translate }}</p>
+      </div>
+      <p class="expires" *ngIf="auth.expiresAt() as expiresAt">
+        {{ 'iam.dashboard.expires' | translate }}: {{ expiresAt | date: 'medium' }}
+      </p>
+    </article>
+  </div>
+</section>

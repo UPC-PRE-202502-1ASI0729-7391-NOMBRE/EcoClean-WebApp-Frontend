@@ -1,0 +1,17 @@
+<section class="admin-panel">
+  <header class="admin-panel__header">
+    <p class="admin-panel__meta">{{ 'admin.dashboard.meta' | translate }}</p>
+    <h1>{{ 'admin.dashboard.title' | translate }}</h1>
+    <p class="subtitle">
+      {{ 'admin.dashboard.description' | translate }}
+    </p>
+  </header>
+
+  <div class="card-grid">
+    <a class="card" *ngFor="let card of cards" [routerLink]="card.target">
+      <h2>{{ card.titleKey | translate }}</h2>
+      <p>{{ card.descriptionKey | translate }}</p>
+      <span class="card__cta">{{ 'admin.dashboard.cta' | translate }}</span>
+    </a>
+  </div>
+</section>

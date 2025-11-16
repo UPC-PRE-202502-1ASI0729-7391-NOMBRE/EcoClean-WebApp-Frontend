@@ -1,0 +1,45 @@
+<section class="general-home">
+  <header class="general-home__hero">
+    <p class="general-home__eyebrow">{{ 'home.meta' | translate }}</p>
+    <div class="general-home__welcome">
+      <h1>{{ 'home.greeting' | translate : { name: userName() } }}</h1>
+      <p>{{ 'home.question' | translate }}</p>
+    </div>
+  </header>
+
+  <section class="general-home__grid">
+    <article class="general-home__card general-home__card--news">
+      <header>
+        <p class="general-home__meta">{{ 'home.news.title' | translate }}</p>
+        <h2>{{ 'home.news.heading' | translate }}</h2>
+        <p class="general-home__description">{{ 'home.news.description' | translate }}</p>
+      </header>
+      <ul class="general-home__news-list">
+        <li *ngFor="let update of updates" class="general-home__news-item">
+          <span class="general-home__badge">{{ update.badgeKey | translate }}</span>
+          <h3>{{ update.titleKey | translate }}</h3>
+          <p>{{ update.descriptionKey | translate }}</p>
+        </li>
+      </ul>
+    </article>
+
+    <article class="general-home__card general-home__card--actions">
+      <header>
+        <p class="general-home__meta">{{ 'home.actions.title' | translate }}</p>
+        <h2>{{ 'home.actions.heading' | translate }}</h2>
+        <p class="general-home__description">{{ 'home.actions.description' | translate }}</p>
+      </header>
+      <div class="general-home__actions">
+        <a
+          *ngFor="let action of actions()"
+          class="general-home__action-card"
+          [routerLink]="action.route"
+        >
+          <h3>{{ action.titleKey | translate }}</h3>
+          <p>{{ action.descriptionKey | translate }}</p>
+          <span class="general-home__action-cta">{{ 'home.actions.cta' | translate }}</span>
+        </a>
+      </div>
+    </article>
+  </section>
+</section>

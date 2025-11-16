@@ -1,0 +1,39 @@
+<section class="admin-panel">
+  <header class="admin-panel__header">
+    <div>
+      <p class="admin-panel__meta">{{ 'admin.applications.meta' | translate }}</p>
+      <h1>{{ 'admin.applications.title' | translate }}</h1>
+      <p class="subtitle">
+        {{ 'admin.applications.description' | translate }}
+      </p>
+    </div>
+  </header>
+
+  <div class="contexts" *ngIf="applications().length; else emptyState">
+    <article class="card" *ngFor="let context of applications()">
+      <header>
+        <h2>{{ context.name }}</h2>
+        <span class="badge" [attr.data-status]="context.status">{{ context.status }}</span>
+      </header>
+      <p>{{ context.description }}</p>
+      <div class="meta">
+        <p class="target">{{ context.targetRoute }}</p>
+        <div class="roles">
+          <span *ngFor="let role of context.roles">{{ role }}</span>
+        </div>
+      </div>
+    </article>
+  </div>
+
+      <p class="error" *ngIf="error()">{{ error() }}</p>
+  <ng-template #emptyState>
+    <div class="empty" *ngIf="!loading(); else loadingTpl">
+      {{ 'admin.applications.empty' | translate }}
+      <button type="button" (click)="reload()">{{ 'admin.applications.retry' | translate }}</button>
+    </div>
+  </ng-template>
+</section>
+
+<ng-template #loadingTpl>
+  <div class="loader" aria-busy="true"></div>
+</ng-template>

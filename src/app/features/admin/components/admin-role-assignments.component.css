@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.admin-panel__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(6, 71, 44, 0.08);
+}
+
+.admin-panel__meta {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.72rem;
+  color: rgba(6, 71, 44, 0.7);
+}
+
+.admin-panel__header h1 {
+  margin: 0;
+  color: #0a3a2c;
+}
+
+.subtitle {
+  margin: 0.4rem 0 0;
+  max-width: 560px;
+  color: #4b5b53;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th {
+  text-align: left;
+  padding-bottom: 0.75rem;
+  color: rgba(6, 71, 44, 0.8);
+  font-weight: 600;
+}
+
+td {
+  padding: 0.65rem 0.5rem;
+  border-top: 1px solid rgba(6, 71, 44, 0.08);
+}
+
+select {
+  border: 1px solid rgba(6, 71, 44, 0.2);
+  border-radius: 0.6rem;
+  padding: 0.35rem 0.7rem;
+  background: #fff;
+}
+
+button {
+  border-radius: 999px;
+  padding: 0.35rem 1.2rem;
+  border: none;
+  background: var(--eco-green);
+  color: #fff;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  table,
+  tr,
+  td,
+  th,
+  thead,
+  tbody {
+    display: block;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    border: none;
+  }
+
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(6, 71, 44, 0.8);
+  }
+
+  button {
+    width: 100%;
+  }
+}

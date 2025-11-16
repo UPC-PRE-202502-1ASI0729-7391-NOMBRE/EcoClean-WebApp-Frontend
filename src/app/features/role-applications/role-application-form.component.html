@@ -1,0 +1,61 @@
+<section class="application-panel">
+  <header>
+    <p class="meta">{{ 'roleApplication.form.meta' | translate }}</p>
+    <h1>{{ 'roleApplication.form.title' | translate }}</h1>
+    <p class="subtitle">{{ 'roleApplication.form.description' | translate }}</p>
+  </header>
+
+  <div class="card" *ngIf="!loading(); else loaderTpl">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>
+        {{ 'roleApplication.form.role' | translate }}
+        <select formControlName="role">
+          <option value="OPERATOR">{{ 'sidebar.role.OPERATOR' | translate }}</option>
+          <option value="MUNICIPAL_OFFICER">{{ 'sidebar.role.MUNICIPAL_OFFICER' | translate }}</option>
+        </select>
+      </label>
+
+      <label>
+        {{ 'roleApplication.form.municipality' | translate }}
+        <select formControlName="municipalityId">
+          <option value="" disabled>{{ 'roleApplication.form.municipalityPlaceholder' | translate }}</option>
+          <option *ngFor="let municipality of municipalities()" [value]="municipality.id">
+            {{ municipality.name }} ({{ municipality.department }})
+          </option>
+        </select>
+      </label>
+
+      <label>
+        {{ 'roleApplication.form.phone' | translate }}
+        <input formControlName="phoneNumber" maxlength="9" placeholder="999999999" />
+      </label>
+
+      <div class="section" *ngIf="isOperator">
+        <p class="section-title">{{ 'roleApplication.form.operatorSection' | translate }}</p>
+        <label>{{ 'roleApplication.form.drivingLicense' | translate }}<input formControlName="drivingLicense" /></label>
+        <label>{{ 'roleApplication.form.company' | translate }}<input formControlName="company" /></label>
+        <label>{{ 'roleApplication.form.workDistrict' | translate }}<input formControlName="workDistrict" /></label>
+        <label>{{ 'roleApplication.form.workCity' | translate }}<input formControlName="workCity" /></label>
+      </div>
+
+      <div class="section" *ngIf="isMunicipalOfficer">
+        <p class="section-title">{{ 'roleApplication.form.officerSection' | translate }}</p>
+        <label>{{ 'roleApplication.form.positionTitle' | translate }}<input formControlName="positionTitle" /></label>
+        <label>{{ 'roleApplication.form.municipalEntity' | translate }}<input formControlName="municipalEntity" /></label>
+        <label>{{ 'roleApplication.form.entityRuc' | translate }}<input formControlName="entityRuc" maxlength="11" /></label>
+        <label>{{ 'roleApplication.form.municipalWorkDistrict' | translate }}<input formControlName="municipalWorkDistrict" /></label>
+      </div>
+
+      <p class="error" *ngIf="error() as errorKey">{{ errorKey | translate }}</p>
+      <p class="success" *ngIf="success()">{{ 'roleApplication.form.success' | translate }}</p>
+
+      <button type="submit" [disabled]="submitting() || loading()">
+        {{ submitting() ? ('roleApplication.form.sending' | translate) : ('roleApplication.form.submit' | translate) }}
+      </button>
+    </form>
+  </div>
+</section>
+
+<ng-template #loaderTpl>
+  <div class="loader" aria-busy="true"></div>
+</ng-template>

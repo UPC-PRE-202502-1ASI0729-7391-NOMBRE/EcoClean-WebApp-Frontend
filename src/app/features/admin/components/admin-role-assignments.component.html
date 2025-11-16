@@ -1,0 +1,38 @@
+<section class="admin-panel">
+  <header class="admin-panel__header">
+    <div>
+      <p class="admin-panel__meta">{{ 'admin.roleAssignments.meta' | translate }}</p>
+      <h1>{{ 'admin.roleAssignments.title' | translate }}</h1>
+      <p class="subtitle">{{ 'admin.roleAssignments.description' | translate }}</p>
+    </div>
+  </header>
+
+  <p class="error" *ngIf="error() as errorKey">{{ errorKey | translate }}</p>
+
+  <article class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ 'admin.roleAssignments.table.user' | translate }}</th>
+          <th>{{ 'admin.roleAssignments.table.email' | translate }}</th>
+          <th>{{ 'admin.roleAssignments.table.role' | translate }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users()">
+          <td [attr.data-label]="'admin.roleAssignments.table.user' | translate">{{ user.name }}</td>
+          <td [attr.data-label]="'admin.roleAssignments.table.email' | translate">{{ user.email }}</td>
+          <td [attr.data-label]="'admin.roleAssignments.table.role' | translate" class="select-cell">
+            <select [formControl]="user.control">
+              <option *ngFor="let role of user.availableRoles" [value]="role">{{ ('sidebar.role.' + role) | translate }}</option>
+            </select>
+          </td>
+          <td data-label="Acciones">
+            <button type="button" (click)="assign(user)">{{ 'admin.roleAssignments.actions.assign' | translate }}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+</section>

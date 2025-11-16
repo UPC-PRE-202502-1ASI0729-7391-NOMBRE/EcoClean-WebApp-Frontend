@@ -1,0 +1,26 @@
+<section class="admin-panel">
+  <header class="admin-panel__header">
+    <div>
+      <p class="eyebrow">Administración</p>
+      <h1>Roles y permisos</h1>
+      <p class="subtitle">Consulta qué acciones puede realizar cada rol antes de habilitar nuevas funciones.</p>
+    </div>
+  </header>
+
+  <p class="error" *ngIf="error()">{{ error() }}</p>
+
+  <div class="policies" *ngIf="!loading(); else loaderTpl">
+    <article class="policy" *ngFor="let policy of policies()">
+      <h2>{{ policy.role }}</h2>
+      <p>{{ policy.description }}</p>
+      <ul>
+        <li *ngFor="let capability of policy.capabilities">{{ capability }}</li>
+      </ul>
+      <button type="button" *ngIf="policy.assignable !== false">Gestionar</button>
+    </article>
+  </div>
+</section>
+
+<ng-template #loaderTpl>
+  <div class="loader" aria-busy="true"></div>
+</ng-template>

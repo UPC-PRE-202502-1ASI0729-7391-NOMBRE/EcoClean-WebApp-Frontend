@@ -1,0 +1,24 @@
+<ng-container *ngIf="isAuthStandalone(); else defaultLayout">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<ng-template #defaultLayout>
+  <div class="app-shell with-sidebar">
+    <app-sidebar
+      [contexts]="contexts"
+      [user]="auth.user()"
+      [isAuthenticated]="auth.isAuthenticated()"
+      (logout)="signOut()"
+      (profile)="goToProfile()"
+    ></app-sidebar>
+    <div class="app-content">
+      <main class="app-main">
+        <router-outlet></router-outlet>
+      </main>
+      <footer class="app-footer">
+        <span class="app-footer__brand">EcoSmart © Copyright 2025</span>
+        <span class="app-footer__slogan">{{ 'layout.footer.slogan' | translate }}</span>
+      </footer>
+    </div>
+  </div>
+</ng-template>

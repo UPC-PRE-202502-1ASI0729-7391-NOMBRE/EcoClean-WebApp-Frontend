@@ -1,0 +1,143 @@
+:host {
+  display: block;
+}
+
+.auth-viewport {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background: var(--eco-green);
+  position: relative;
+}
+
+.language-toggle {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.container {
+  width: min(440px, 100%);
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+  color: #0a3a2c;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: #0a3a2c;
+}
+
+.brand-subtitle {
+  margin: 0.2rem 0 0.5rem;
+  font-size: 1rem;
+  color: var(--eco-green);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  text-align: center;
+  color: #4f5b57;
+  margin-bottom: 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  height: 60px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 0 15px;
+  font-size: 1rem;
+  margin-bottom: 1.3rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--eco-green);
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
+.link {
+  font-size: 0.95rem;
+  color: var(--eco-green);
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.button {
+  background: var(--eco-green);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 6px;
+  height: 60px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button:not([disabled]):hover {
+  background: var(--eco-green-dark);
+  transform: translateY(-1px);
+}
+
+.signup {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.signup a {
+  color: var(--eco-green);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: #c62828;
+  font-size: 0.85rem;
+  margin-top: -0.8rem;
+  margin-bottom: 1rem;
+}
+
+.form-error {
+  margin-top: 0;
+  text-align: center;
+}

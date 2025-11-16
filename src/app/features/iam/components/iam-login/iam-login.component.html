@@ -1,0 +1,49 @@
+<div class="auth-viewport">
+  <div class="language-toggle">
+    <app-language-switcher></app-language-switcher>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <p class="brand">{{ 'iam.auth.brand' | translate }}</p>
+      <p class="brand-subtitle">{{ 'iam.login.heroTitle' | translate }}</p>
+      <h1>{{ 'iam.login.title' | translate }}</h1>
+      <p class="subtitle">{{ 'iam.login.subtitle' | translate }}</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <input
+        type="email"
+        formControlName="email"
+        [placeholder]="'iam.login.emailPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="emailControl.invalid && emailControl.touched">
+        {{ 'iam.login.validation.email' | translate }}
+      </span>
+
+      <input
+        type="password"
+        formControlName="password"
+        [placeholder]="'iam.login.passwordPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="passwordControl.invalid && passwordControl.touched">
+        {{ 'iam.login.validation.password' | translate }}
+      </span>
+
+      <a class="link" href="#">{{ 'iam.login.forgotPassword' | translate }}</a>
+
+      <p class="error form-error" *ngIf="errorKey() as error">{{ error | translate }}</p>
+
+      <button type="submit" class="button" [disabled]="isSubmitting()">
+        {{ 'iam.login.submit' | translate }}
+      </button>
+    </form>
+
+    <div class="signup">
+      <span>
+        {{ 'iam.login.signupPrompt' | translate }}
+        <a routerLink="/register">{{ 'iam.login.signupCta' | translate }}</a>
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.admin-panel__header {
+  border-bottom: 1px solid rgba(6, 71, 44, 0.08);
+  padding-bottom: 1rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  margin: 0;
+  color: var(--eco-green);
+}
+
+.subtitle {
+  margin: 0.4rem 0 0;
+  max-width: 560px;
+  color: #4b5b53;
+}
+
+.card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 20px 45px rgba(4, 42, 34, 0.08);
+  border: 1px solid rgba(6, 71, 44, 0.08);
+}

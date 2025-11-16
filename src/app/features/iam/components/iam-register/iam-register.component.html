@@ -1,0 +1,119 @@
+<div class="auth-viewport">
+  <div class="language-toggle">
+    <app-language-switcher></app-language-switcher>
+  </div>
+
+  <div class="container">
+    <div class="hero">
+      <p class="brand">{{ 'iam.auth.brand' | translate }}</p>
+      <p class="brand-subtitle">{{ 'iam.register.heroTitle' | translate }}</p>
+      <h1>{{ 'iam.register.title' | translate }}</h1>
+      <p class="subtitle">{{ 'iam.register.subtitle' | translate }}</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <input
+        type="email"
+        formControlName="email"
+        [placeholder]="'iam.register.emailPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.email.invalid && controls.email.touched">
+        {{ 'iam.login.validation.email' | translate }}
+      </span>
+
+      <input
+        type="password"
+        formControlName="password"
+        [placeholder]="'iam.register.passwordPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.password.invalid && controls.password.touched">
+        {{ 'iam.login.validation.password' | translate }}
+      </span>
+
+      <input
+        type="text"
+        formControlName="firstName"
+        [placeholder]="'iam.register.firstNamePlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.firstName.invalid && controls.firstName.touched">
+        {{ 'iam.register.validation.required' | translate }}
+      </span>
+
+      <input
+        type="text"
+        formControlName="paternalLastName"
+        [placeholder]="'iam.register.paternalPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.paternalLastName.invalid && controls.paternalLastName.touched">
+        {{ 'iam.register.validation.required' | translate }}
+      </span>
+
+      <input
+        type="text"
+        formControlName="maternalLastName"
+        [placeholder]="'iam.register.maternalPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.maternalLastName.invalid && controls.maternalLastName.touched">
+        {{ 'iam.register.validation.required' | translate }}
+      </span>
+
+      <input
+        type="text"
+        formControlName="dni"
+        [placeholder]="'iam.register.dniPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.dni.invalid && controls.dni.touched">
+        {{ 'iam.register.validation.dni' | translate }}
+      </span>
+
+      <input
+        type="text"
+        formControlName="phoneNumber"
+        [placeholder]="'iam.register.phonePlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.phoneNumber.invalid && controls.phoneNumber.touched">
+        {{ 'iam.register.validation.phone' | translate }}
+      </span>
+
+      <input
+        type="text"
+        formControlName="department"
+        [placeholder]="'iam.register.departmentPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.department.invalid && controls.department.touched">
+        {{ 'iam.register.validation.required' | translate }}
+      </span>
+
+      <input
+        type="text"
+        formControlName="province"
+        [placeholder]="'iam.register.provincePlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.province.invalid && controls.province.touched">
+        {{ 'iam.register.validation.required' | translate }}
+      </span>
+
+      <input
+        type="text"
+        formControlName="district"
+        [placeholder]="'iam.register.districtPlaceholder' | translate"
+      />
+      <span class="error" *ngIf="controls.district.invalid && controls.district.touched">
+        {{ 'iam.register.validation.required' | translate }}
+      </span>
+
+      <p class="error form-error" *ngIf="errorKey() as error">{{ error | translate }}</p>
+
+      <button type="submit" class="button" [disabled]="isSubmitting()">
+        {{ 'iam.register.submit' | translate }}
+      </button>
+    </form>
+
+    <div class="signup">
+      <span>
+        {{ 'iam.register.loginPrompt' | translate }}
+        <a routerLink="/login">{{ 'iam.register.loginCta' | translate }}</a>
+      </span>
+    </div>
+  </div>
+</div>
